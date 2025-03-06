@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz</title>
+    <title>Janine Website</title>
     <style>
         body {
-            background-color: #ff69b4;
+            background-color: #faa5d1;
             color: white;
             text-align: center;
-            font-family: Arial, sans-serif;
+            margin-top: 50px;
+            font-family: 'Comfortaa'; font-size: 22px;
         }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }    
         .container {
             margin-top: 10%;
         }
@@ -46,7 +56,19 @@
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <h2>Please enter your birthday!</h2>
+
+    <form id="birthdayForm">
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday" required>
+        <input type="submit" value="Check">
+    </form>
+
+    <div id="message"></div>
+
+    <div id="quizSection" class="hidden">
+        <h2>Quiz Time! 🎉</h2>
         <div class="question">What is the capital of France?</div>
         <div class="options">
             <label><input type="radio" name="quiz" value="London"> London</label>
@@ -59,6 +81,33 @@
     </div>
 
     <script>
+        function checkBirthday(event) {
+            event.preventDefault(); // Prevent form submission
+
+            let inputDate = document.getElementById("birthday").value;
+            let specialDate = "2000-03-05"; // Change this to the correct birthday
+
+            let messageDiv = document.getElementById("message");
+
+            if (!inputDate) {
+                messageDiv.innerHTML = "Please enter a date.";
+                messageDiv.style.color = "yellow";
+                return;
+            }
+
+            if (inputDate === specialDate) {
+                messageDiv.innerHTML = "🎉 Birthday verified! Starting the quiz... 🎂";
+                messageDiv.style.color = "lightgreen";
+                
+                // Hide birthday form and show quiz
+                document.getElementById("birthdayForm").classList.add("hidden");
+                document.getElementById("quizSection").classList.remove("hidden");
+            } else {
+                messageDiv.innerHTML = "❌ Sorry, that's not the correct birthday.";
+                messageDiv.style.color = "red";
+            }
+        }
+
         function checkAnswer() {
             let selected = document.querySelector('input[name="quiz"]:checked');
             let resultDiv = document.getElementById("result");
@@ -76,5 +125,6 @@
             }
         }
     </script>
+
 </body>
 </html>
