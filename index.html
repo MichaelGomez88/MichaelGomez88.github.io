@@ -19,6 +19,57 @@
             font-weight: bold;
         }
 
+        .quiz-container {
+            background-color: azure;
+            color: white;
+            text-align: center;
+            padding: 20px 20px 40px 20px;
+            border-radius: 15px;
+            position: relative;
+            z-index: 0;
+            max-width: 600px;
+            margin: 30px auto;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.473);
+        }
+
+        .quiz-question{
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options label {
+            display: block;
+            padding: 12px;
+            background: #ffe6f0;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .quiz-options label:hover {
+            background: #ffb6c1;
+            color: white;
+        }
+
+        .quiz-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #ff69b4;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .quiz-button:hover {
+            background: #e05297;
+        }
+
         .hidden {
             display: none;
         }    
@@ -54,63 +105,49 @@
             font-size: 20px;
             font-weight: bold;
         }
+
     </style>
 </head>
 <body>
-
-    <h2>Please enter your birthday!</h2>
-
-    <form id="birthdayForm">
-        <label for="birthday">Birthday:</label>
-        <input type="date" id="birthday" name="birthday" required>
-        <input type="submit" value="Check">
-    </form>
-
-    <div id="message"></div>
-
     <div id="quizSection" class="hidden">
-        <h2>Now for the true quizzing</h2>
-        <div class="question">What's the main character's name in Threat Level Midnight??</div>
-        <div class="options">
-            <label><input type="radio" name="quiz" value="London">Agent Michael Scarn</label>
-            <label><input type="radio" name="quiz" value="Berlin"> Michael Scott</label>
-            <label><input type="radio" name="quiz" value="Paris"> Milo</label>
-            <label><input type="radio" name="quiz" value="Madrid"> Golden Face</label>
-        </div>
-        <button class="button" onclick="checkAnswer()">Submit Answer</button>
+        
+        <div class="quiz-container">
+            <h2>Now for the true quizzing</h2>
+            <span style="display:block;text-align:left;">?</span>
+            <span class="w3-text" style="padding:0 20px 30px 20px">
+                <b>What is this?</b><br>
+            </span>
+        </span></h2>
+
+        <p class="quiz-question">What's the main character's name in Threat Level Midnight??</p>
+        
+        <form id="quizForm">
+            <div class="quiz-option">
+                <input type="radio" name="quiz" id="option1" value="Agent Michael Scarn">
+                <label for="option1">Agent Michael Scarn</label>
+            </div>
+
+            <div class="quiz-option">
+                <input type="radio" name="quiz" id="option2" value="Michael Scott">
+                <label for="option2">Michael Scott</label>
+            </div>
+
+            <div class="quiz-option">
+                <input type="radio" name="quiz" id="option3" value="Milo">
+                <label for="option3">Milo</label>
+            </div>
+
+            <div class="quiz-option">
+                <input type="radio" name="quiz" id="option4" value="Golden Face">
+                <label for="option4">Golden Face</label>
+            </div>
+
+            <button type="button" class="quiz-button" onclick="checkAnswer()">Submit Answer »</button>
+        </form>
+
         <div id="result"></div>
-    </div>
 
     <script>
-        function checkBirthday(event) {
-            event.preventDefault(); // Prevent form submission
-
-            let inputDate = document.getElementById("birthday").value;
-            let specialDate = "2003-06-29"; // Change this to the correct birthday
-
-            let messageDiv = document.getElementById("message");
-
-            if (!inputDate) {
-                messageDiv.innerHTML = "Please select your birthday!";
-                messageDiv.style.color = "yellow";
-                return;
-            }
-
-            let formattedInputDate = new Date(inputDate).toISOString().split("T")[0];
-
-            if (inputDate === specialDate) {
-                messageDiv.innerHTML = "🎉 Birthday verified! Starting the quiz... 🎂";
-                messageDiv.style.color = "lightgreen";
-                
-                // Hide birthday form and show quiz
-                document.getElementById("birthdayForm").classList.add("hidden");
-                document.getElementById("quizSection").classList.remove("hidden");
-            } else {
-                messageDiv.innerHTML = "❌ Sorry, that's not the correct birthday.";
-                messageDiv.style.color = "red";
-            }
-        }
-
         function checkAnswer() {
             let selected = document.querySelector('input[name="quiz"]:checked');
             let resultDiv = document.getElementById("result");
