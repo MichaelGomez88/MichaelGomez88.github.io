@@ -69,13 +69,13 @@
     <div id="message"></div>
 
     <div id="quizSection" class="hidden">
-        <h2>Quiz Time! 🎉</h2>
-        <div class="question">What is the capital of France?</div>
+        <h2>Now for the true quizzing</h2>
+        <div class="question">What's the main character's name in Threat Level Midnight??</div>
         <div class="options">
-            <label><input type="radio" name="quiz" value="London"> London</label>
-            <label><input type="radio" name="quiz" value="Berlin"> Berlin</label>
-            <label><input type="radio" name="quiz" value="Paris"> Paris</label>
-            <label><input type="radio" name="quiz" value="Madrid"> Madrid</label>
+            <label><input type="radio" name="quiz" value="London">Agent Michael Scarn</label>
+            <label><input type="radio" name="quiz" value="Berlin"> Michael Scott</label>
+            <label><input type="radio" name="quiz" value="Paris"> Milo</label>
+            <label><input type="radio" name="quiz" value="Madrid"> Golden Face</label>
         </div>
         <button class="button" onclick="checkAnswer()">Submit Answer</button>
         <div id="result"></div>
@@ -86,12 +86,12 @@
             event.preventDefault(); // Prevent form submission
 
             let inputDate = document.getElementById("birthday").value;
-            let specialDate = "2000-03-05"; // Change this to the correct birthday
+            let specialDate = "2003-06-29"; // Change this to the correct birthday
 
             let messageDiv = document.getElementById("message");
 
             if (!inputDate) {
-                messageDiv.innerHTML = "Please enter a date.";
+                messageDiv.innerHTML = "Please select your birthday!";
                 messageDiv.style.color = "yellow";
                 return;
             }
