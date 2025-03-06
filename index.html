@@ -2,12 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Janine Questionnaire</title>
+    <title>Quiz</title>
+    <style>
+        body {
+            background-color: #ff69b4;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 10%;
+        }
+        .question {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .options {
+            margin: 20px;
+        }
+        .options label {
+            display: block;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background: white;
+            color: #ff69b4;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background: #ffe6ea;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p>I'm hosted with Github Pages.</p>
+    <div class="container">
+        <div class="question">What is the capital of France?</div>
+        <div class="options">
+            <label><input type="radio" name="quiz" value="London"> London</label>
+            <label><input type="radio" name="quiz" value="Berlin"> Berlin</label>
+            <label><input type="radio" name="quiz" value="Paris"> Paris</label>
+            <label><input type="radio" name="quiz" value="Madrid"> Madrid</label>
+        </div>
+        <button class="button" onclick="checkAnswer()">Submit Answer</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            let selected = document.querySelector('input[name="quiz"]:checked');
+            let resultDiv = document.getElementById("result");
+            if (!selected) {
+                resultDiv.innerHTML = "Please select an answer!";
+                resultDiv.style.color = "yellow";
+                return;
+            }
+            if (selected.value === "Paris") {
+                resultDiv.innerHTML = "Correct! 🎉";
+                resultDiv.style.color = "lightgreen";
+            } else {
+                resultDiv.innerHTML = "Incorrect! ❌ The correct answer is Paris.";
+                resultDiv.style.color = "red";
+            }
+        }
+    </script>
 </body>
 </html>
