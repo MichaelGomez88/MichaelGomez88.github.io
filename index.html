@@ -67,6 +67,20 @@
             color: white;
         }
 
+        .hidden {
+            display: none;
+        }
+
+        input {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ff69b4;
+            text-align: center;
+        }
+
         .quiz-button {
             display: block;
             width: 100%;
@@ -135,6 +149,7 @@
 
             <button type="submit" class="quiz-button">Login</button>
         </form>
+        <div id="loginMessage"></div>
     </div>
 
 
@@ -206,7 +221,7 @@
                 resultDiv.style.color = "yellow";
                 return;
             }
-            if (selected.value === "Paris") {
+            if (selected.value === "Agent Michael Scarn") {
                 resultDiv.innerHTML = "Correct!";
                 resultDiv.style.color = "lightgreen";
             } else {
