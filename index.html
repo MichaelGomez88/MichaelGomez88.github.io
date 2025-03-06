@@ -35,7 +35,7 @@
 
         .quiz-container {
             background-color: azure;
-            color: white;
+            color: #ff69b4;
             text-align: center;
             padding: 20px 20px 40px 20px;
             border-radius: 15px;
@@ -176,10 +176,10 @@
 
     <div id="quizSection" class="hidden">
         <div class="quiz-container">
-            <h2>Now for the true quizzing</h2>
-            <span style="display:block;text-align:left;">?</span>
+            <h2>Now for true quizzing</h2>
+            <span style="display:block;text-align:left;"></span>
             <span class="w3-text" style="padding:0 20px 30px 20px">
-                <b>What is this?</b><br>
+                <b></b><br>
             </span>
         </span></h2>
 
@@ -206,7 +206,8 @@
                 <label for="option4">Golden Face</label>
             </div>
 
-            <button type="button" class="quiz-button" onclick="checkAnswer()">Submit Answer »</button>
+            <button type="button" class="quiz-button" onclick="checkAnswer()">Submit »</button>
+            <button type="button" class="quiz-button hidden" id="nextButton" onclick="loadNextQuestion()">Next</button>
         </form>
 
         <div id="result"></div>
@@ -237,6 +238,9 @@
         function checkAnswer() {
             let selected = document.querySelector('input[name="quiz"]:checked');
             let resultDiv = document.getElementById("result");
+            let nextButton = document.getElementById("nextButton");
+            let submitButton = document.querySelector('.quiz-button');
+
             if (!selected) {
                 resultDiv.innerHTML = "Please select an answer!";
                 resultDiv.style.color = "yellow";
@@ -249,6 +253,30 @@
                 resultDiv.innerHTML = "Incorrect!";
                 resultDiv.style.color = "red";
             }
+        }
+
+        function loadNextQuestion() {
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("nextButton").classList.add("hidden");
+
+            document.querySelector(".quiz-question").innerHTML = "What did I call Snoopy that one time I was drunk???";
+            document.getElementById("option1").value = "Snoopy";
+            document.querySelector('label[for="option1"]').innerHTML = "Snoopy";
+
+            document.getElementById("option2").value = "Esnupi";
+            document.querySelector('label[for="option2"]').innerHTML = "Esnupi";
+
+            document.getElementById("option3").value = "Snoppu";
+            document.querySelector('label[for="option3"]').innerHTML = "Snoppu";
+
+            document.getElementById("option4").value = "Doggerson";
+            document.querySelector('label[for="option4"]').innerHTML = "Doggerson";
+
+            document.querySelectorAll('input[name="quiz"]').forEach(input => input.checked = false);
+
+            querySelector('.quiz-button').classList.remove("hidden");
+
+
         }
     </script>
 
