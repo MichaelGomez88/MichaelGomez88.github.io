@@ -96,6 +96,8 @@
                 return;
             }
 
+            let formattedInputDate = new Date(inputDate).toISOString().split("T")[0];
+
             if (inputDate === specialDate) {
                 messageDiv.innerHTML = "🎉 Birthday verified! Starting the quiz... 🎂";
                 messageDiv.style.color = "lightgreen";
@@ -118,10 +120,10 @@
                 return;
             }
             if (selected.value === "Paris") {
-                resultDiv.innerHTML = "Correct! 🎉";
+                resultDiv.innerHTML = "Correct!";
                 resultDiv.style.color = "lightgreen";
             } else {
-                resultDiv.innerHTML = "Incorrect! ❌ The correct answer is Paris.";
+                resultDiv.innerHTML = "Incorrect!";
                 resultDiv.style.color = "red";
             }
         }
