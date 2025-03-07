@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Janine Website</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
+    <meta name="neen" content="width=device-width, initial-scale=1">
     <style>
-        /* Your existing CSS styles */
+        
         body {
             background-color: #faa5d1;
             color: white;
@@ -15,25 +16,24 @@
             font-family: 'Comfortaa'; font-size: 22px;
         }
 
-        /* Slideshow container */
+        
         .slideshow-container {
             max-width: 1000px;
             position: relative;
             margin: auto;
         }
 
-        /* Hide slides initially */
+       
         .mySlides {
             display: none;
         }
 
-        /* Image styling */
+        
         img {
-            width: 100%;
-            border-radius: 10px;
+            vertical-align: middle;
         }
 
-        /* Navigation buttons */
+        
         .prev, .next {
             cursor: pointer;
             position: absolute;
@@ -73,7 +73,7 @@
             background-color: #717171;
         }
 
-        /* Fading animation */
+       
         .fade {
             animation-name: fade;
             animation-duration: 1.5s;
@@ -83,25 +83,29 @@
             from {opacity: 0.4} 
             to {opacity: 1}
         }
+        
+        @media only screen and (max-width: 300px) {
+            .prev, .next, .text {font-size: 11px}
+        }
     </style>
 </head>
 <body>
 
 <div class="slideshow-container">
     <div class="mySlides fade">
-        <img src="Cheesin.jpg" alt="Image 1">
+        <img src="Cheesin.jpg" style="width: 100%">
     </div>
 
     <div class="mySlides fade">
-        <img src="Ginger Selfie.jpg" alt="Image 2">
+        <img src="Ginger Selfie.jpg" style="width: 100%">
     </div>
 
     <div class="mySlides fade">
-        <img src="Smoochie Wallace.jpg" alt="Image 3">
+        <img src="Smoochie Wallace.jpg" style="width: 100%">
     </div>
 
     <div class="mySlides fade">
-        <img src="Wojak.jpg" alt="Image 4">
+        <img src="Wojak.jpg" style="width: 100%">
     </div>
 
     <a class="prev" onclick="plusSlides(-1)">❮</a>
