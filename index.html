@@ -49,7 +49,7 @@
         .quiz-question{
             font-size: 22px;
             font-weight: bold;
-            
+
             margin-bottom: 15px;
             color: #ff69b4;
         }
@@ -217,6 +217,49 @@
         const correctUsername = "guadalupe"
         const correctPassword = "neen151617"
 
+        const questions = [
+            {
+                question: "What's the main character's name in Threat Level Midnight?",
+                options: [
+                    {value: "Agent Michael Scarn", label: "Agent Michael Scarn"},
+                    {value: "Michael Scott", label: "Michael Scott"},
+                    {value: "Milo", label: "Milo"},
+                    {value: "Golden Face", label: "Golden Face"},
+                ],
+                correctAnswer: "Agent Michael Scarn"
+            },
+            {
+                question: "What is my middle name????",
+                options: [
+                    {value: "Ezekiel", label: "Ezekiel"},
+                    {value: "Jamiroquai", label: "Jamiroquai"},
+                    {value: "Ethan", label: "Ethan"},
+                    {value: "Jarvis", label: "Jarvis"},
+                ],
+                correctAnswer: "Ethan"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.querySelector(".quiz-question").innerHTML = question.question;
+
+            question.options.forEach((option, index) => {
+            document.getElementById(`option${index + 1}`).value = option.value;
+            document.querySelector(`label[for="option${index + 1}"]`).innerHTML = option.label;
+            });
+
+        // Reset any previous selections
+        document.querySelectorAll('input[name="quiz"]').forEach(input => input.checked = false);
+
+        // Hide the result and next button for the next question
+        document.getElementById("result").innerHTML = "";
+        document.getElementById("nextButton").classList.add("hidden");
+        document.querySelector('.quiz-button').classList.remove("hidden");
+        }
+
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -247,9 +290,11 @@
                 resultDiv.style.color = "yellow";
                 return;
             }
-            if (selected.value === "Agent Michael Scarn") {
+            if (selected.value === questions[currentQuestionIndex].correctAnswer) {
                 resultDiv.innerHTML = "Correct!";
                 resultDiv.style.color = "lightgreen";
+                nextButton.classList.remove("hidden");
+                submitButton.classList.add("hidden");
             } else {
                 resultDiv.innerHTML = "Incorrect!";
                 resultDiv.style.color = "red";
@@ -257,28 +302,28 @@
         }
 
         function loadNextQuestion() {
-            document.getElementById("result").innerHTML = "";
-            document.getElementById("nextButton").classList.add("hidden");
+            currentQuestionIndex++;
 
-            document.querySelector(".quiz-question").innerHTML = "What did I call Snoopy that one time I was drunk???";
-            document.getElementById("option1").value = "Snoopy";
-            document.querySelector('label[for="option1"]').innerHTML = "Snoopy";
+            if (currentQuestionIndex >= questions.length) {
+                document.querySelector(".quiz-container").innerHTML = "<h2>You're done!</h2><p>Great job!</p>";
+            return;
+            }       
 
-            document.getElementById("option2").value = "Esnupi";
-            document.querySelector('label[for="option2"]').innerHTML = "Esnupi";
+            const question = questions[currentQuestionIndex];
+            document.querySelector(".quiz-question").innerHTML = question.question;
 
-            document.getElementById("option3").value = "Snoppu";
-            document.querySelector('label[for="option3"]').innerHTML = "Snoppu";
-
-            document.getElementById("option4").value = "Doggerson";
-            document.querySelector('label[for="option4"]').innerHTML = "Doggerson";
+            question.options.forEach((option, index) => {
+                document.getElementById(`option${index + 1}`).value = option.value;
+                document.querySelector(`label[for="option${index + 1}"]`).innerHTML = option.label;
+            });
 
             document.querySelectorAll('input[name="quiz"]').forEach(input => input.checked = false);
-
-            querySelector('.quiz-button').classList.remove("hidden");
-
-
+    
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("nextButton").classList.add("hidden");
+            document.querySelector('.quiz-button').classList.remove("hidden");
         }
+
     </script>
 
 </body>
