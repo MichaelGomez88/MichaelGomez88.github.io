@@ -13,6 +13,50 @@
             margin-top: 50px;
             font-family: 'Comfortaa'; font-size: 22px;
         }
+
+        #menu-icon {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 2;
+        }
+
+        .bar {
+            width: 35px;
+            height: 5px;
+            background-color: white;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        #sidebar {
+            width: 200px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -200px;
+            background: #ff69b4;
+            padding-top: 50px;
+            transition: 0.4s;
+            z-index: 3;
+        }
+
+        #sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        #siderbar a:hover{
+            background: #ff4081;
+        }
+
+
         #message {
             margin-top: 20px;
             font-size: 20px;
@@ -159,6 +203,19 @@
     </style>
 </head>
 <body>
+
+    <div id="menu-icon" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <div id="sidebar">
+        <a href="index.html">Quiz</a>
+        <a href="home.html">Home</a>
+        
+    </div>
+
     <div class="login-container">
         <h2>Use your super top secret sign-in I gave you</h2>
 
@@ -213,7 +270,19 @@
 
         <div id="result"></div>
 
+
+
     <script>
+
+        function toggleMenu() {
+            var sidebar = document.getElementById("sidebar");
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "=200px";
+            } else {
+                sidebar.style.left = "0px";
+            }
+        }
+
         const correctUsername = "guadalupe"
         const correctPassword = "neen151617"
 
