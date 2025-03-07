@@ -24,25 +24,12 @@
             z-index: 2;
         }
 
-        .menu-icon {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
         .bar {
-            width: 30px;
-            height: 4px;
+            width: 35px;
+            height: 5px;
             background-color: white;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .menu-icon.open .bar:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-icon.open .bar:nth-child(3) {
-            transform: translateY(-9px) rotate(-45deg);
+            margin: 6px 0;
+            transition: 0.4s;
         }
 
         #sidebar {
@@ -217,7 +204,7 @@
 </head>
 <body>
 
-    <div class="menu-icon" id="menuIcon" onclick="toggleMenu()">
+    <div id="menu-icon" onclick="toggleMenu()">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
@@ -288,8 +275,12 @@
     <script>
 
         function toggleMenu() {
-            document.getElementById("sidebar").classList.toggle("active");
-            document.getElementById("menuIcon").classList.toggle("open");
+            var sidebar = document.getElementById("sidebar");
+            if (sidebar.style.left === "0px") {
+                sidebar.style.left = "=200px";
+            } else {
+                sidebar.style.left = "0px";
+            }
         }
 
         const correctUsername = "guadalupe"
