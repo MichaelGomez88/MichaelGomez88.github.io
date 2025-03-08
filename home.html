@@ -222,10 +222,14 @@
     <a href="timeline.html">Timeline</a>
 </div>
 
+<div id="content"></div>
+
 <div id="essay-container" style="display: none; padding: 30px; background-color: white; color: #ff4081; border-radius: 15px; width: 80%; margin: 20px auto;">
     <h2>My Little Essay (Worth 50%)</h2>
     <p>
-            EUAUJIBSDOJFNJANIUSDNIJFNLJKANLKNHAOUDUOFONO
+            Line one.
+            Line two.
+            Line three.
     </p>
 </div>
 
@@ -277,6 +281,15 @@
         audio.play();
         isPlaying = true;
         playButton.innerHTML = "⏸ Pause Music"
+    }
+
+    function loadPage(page) {
+        fetch(page)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("content").innerHTML = data;
+            })
+            .catch(error => console.error('Error loading page:', error));
     }
 
     function toggleMusic() {
