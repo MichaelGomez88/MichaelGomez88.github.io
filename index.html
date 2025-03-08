@@ -200,6 +200,18 @@
             font-weight: bold;
         }
 
+        #extraImages {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #extraImages img {
+            width: 200px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
     </style>
 </head>
 <body>
@@ -269,7 +281,11 @@
         </form>
 
         <div id="result"></div>
+        </div>
 
+        <div id="extraImages" class="hidden">
+            <img src="images/SackboyRizz-removebg-preview.png" alt="">
+        </div>
 
 
     <script>
@@ -405,6 +421,9 @@
 
             if (currentQuestionIndex >= questions.length) {
                 document.querySelector(".quiz-container").innerHTML = '<h2>Will you be my girlfriend?</h2><p></p><img src="images/Question.png" alt="The pic" style="width: 300px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, .2);">';
+                
+                document.getElementById("extraImages").classList.remove("hidden");
+            
             return;
             }       
 
