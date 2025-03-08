@@ -264,7 +264,7 @@
                 <label for="option4">Golden Face</label>
             </div>
 
-            <button type="button" class="quiz-button" onclick="checkAnswer(questionIndex, selectedOptionValue)">Submit »</button>
+            <button type="button" class="quiz-button" onclick="checkAnswer()">Submit »</button>
             <button type="button" class="quiz-button hidden" id="nextButton" onclick="loadNextQuestion()">Next</button>
         </form>
 
@@ -379,7 +379,7 @@
             }
         });
 
-        /* 
+        
         function checkAnswer() {
             let selected = document.querySelector('input[name="quiz"]:checked');
             let resultDiv = document.getElementById("result");
@@ -401,22 +401,7 @@
                 resultDiv.style.color = "red";
             }
         }
-        */
-
-        function checkAnswer(questionIndex, selectedOptionValue) {
-            const question = questions[questionIndex];
-            const feedbackElement = document.getElementById("feedback");
-
-            if (selectedOptionValue === question.correctAnswer) {
-                feedbackElement.textContent = question.correctMessage;
-                feedbackElement.style.color = "green";
-            } else {
-                feedbackElement.textContent = question.incorrectMessage;
-                feedbackElement.style.color = "red";
-            }
-        }
-
-
+        
 
         function loadNextQuestion() {
             currentQuestionIndex++;
