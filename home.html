@@ -269,6 +269,16 @@
     const audio = document.getElementById("backgroundMusic");
     const playButton = document.querySelector(".play-button");
 
+    if (sessionStorage.getItem("musicTime")) {
+        audio.currentTime = sessionStorage.getItem("musicTime");
+    }
+
+    if (sessionStorage.getItem("isPlaying") === "true") {
+        audio.play();
+        isPlaying = true;
+        playButton.innerHTML = "⏸ Pause Music"
+    }
+
     function toggleMusic() {
         if (isPlaying) {
             audio.pause();
@@ -278,7 +288,13 @@
             playButton.innerHTML = "⏸ Pause Music";
         }
         isPlaying = !isPlaying;
+
+        sessionStorage.setItem("isPlaying", isPlaying);
     }
+
+    window.addEventListener("beforeunload", function() {
+        sessionStorage.setItem("musicTime", audio.currentTime);
+    });
 
     function toggleEssay() {
         let slideshow = document.querySelector(".slideshow-container");
