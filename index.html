@@ -334,9 +334,6 @@
                 correctAnswer: "Yes",
                 correctMessage: "Okay, since you're ready",
                 incorrectMessage: "Aw man :("
-            },
-            {
-                question: "Will you be my girlfriend?"
             }
         ];
 
@@ -392,12 +389,12 @@
                 return;
             }
             if (selected.value === questions[currentQuestionIndex].correctAnswer) {
-                resultDiv.innerHTML = "Correct!";
+                resultDiv.innerHTML = "Let's goooooo!";
                 resultDiv.style.color = "lightgreen";
                 nextButton.classList.remove("hidden");
                 submitButton.classList.add("hidden");
             } else {
-                resultDiv.innerHTML = "Incorrect!";
+                resultDiv.innerHTML = "Dude... no :(";
                 resultDiv.style.color = "red";
             }
         }
@@ -407,7 +404,7 @@
             currentQuestionIndex++;
 
             if (currentQuestionIndex >= questions.length) {
-                document.querySelector(".quiz-container").innerHTML = "<h2>You're done!</h2><p>Great job!</p>";
+                document.querySelector(".quiz-container").innerHTML = '<h2>Will you be my girlfriend?</h2><p></p><img src="images/Question.png" alt="The pic" style="width: 300px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, .2);"';
             return;
             }       
 
