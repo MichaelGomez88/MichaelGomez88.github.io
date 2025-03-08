@@ -174,16 +174,6 @@
     <a href="timeline.html">Timeline</a>
 </div>
 
-<div style="margin: 20px auto; width: 80%; max-width: 800px;">
-    <iframe width="100%" height="400" 
-        src="https://www.youtube.com/watch?v=m-_2MhQpmMk" 
-        title="YouTube video player" frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe>
-</div>
-
-
 <div class="slideshow-container">
     <div class="mySlides fade">
         <img src="images/Cheesin.jpg" style="width: 100%">
@@ -212,7 +202,31 @@
     <span class="dot" onclick="currentSlide(4)"></span>  
 </div>
 
+<button class="play-button" onclick="toggleMusic()">▶ Play</button>
+
+<audio id="backgroundMusic" loop>
+    <source src="audio/Arctic Monkeys - No.1 Party Anthem.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+
 <script>
+
+    let isPlaying = false;
+    const audio = document.getElementById("backgroundMusic");
+    const playButton = document.querySelector(".play-button");
+
+    function toggleMusic() {
+        if (isPlaying) {
+            audio.pause();
+            playButton.innerHTML = "▶ Play";
+        } else {
+            audio.play();
+            playButton.innerHTML = "⏸ Pause Music";
+        }
+        isPlaying = !isPlaying;
+    }
+
     function toggleMenu() {
         var sidebar = document.getElementById("sidebar");
         if (sidebar.style.left === "0px") {
