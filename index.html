@@ -234,7 +234,7 @@
 
     <div id="quizSection" class="hidden">
         <div class="quiz-container">
-            <h2>Now for true quizzing</h2>
+            <h2>SUPER HARD QUIZ!!</h2>
             <span style="display:block;text-align:left;"></span>
             <span class="w3-text" style="padding:0 20px 30px 20px">
                 <b></b><br>
@@ -295,7 +295,9 @@
                     {value: "Milo", label: "Milo"},
                     {value: "Golden Face", label: "Golden Face"},
                 ],
-                correctAnswer: "Agent Michael Scarn"
+                correctAnswer: "Agent Michael Scarn",
+                correctMessage: "Good, just had to make sure",
+                incorrectMessage: "hmmmmmm, wrong"
             },
             {
                 question: "What is my middle name????",
@@ -305,7 +307,9 @@
                     {value: "Ethan", label: "Ethan"},
                     {value: "Jarvis", label: "Jarvis"},
                 ],
-                correctAnswer: "Ethan"
+                correctAnswer: "Ethan",
+                correctMessage: "Such a gross name :(",
+                incorrectMessage: "Alright, Guadalupe..."
             },
             {
                 question: "What's 9+10?????",
@@ -315,7 +319,9 @@
                     {value: "10", label: "10"},
                     {value: "20?", label: "20?"},
                 ],
-                correctAnswer: "21"
+                correctAnswer: "21",
+                correctMessage: "I believed in you!",
+                incorrectMessage: "FRAUD!!"
             },
             {
                 question: "Are you ready for the hardest question??",
@@ -325,15 +331,12 @@
                     {value: "I guess", label: "I guess"},
                     {value: "No", label: "No"},
                 ],
-                correctAnswer: "Yes"
+                correctAnswer: "Yes",
+                correctMessage: "Okay, since you're ready",
+                incorrectMessage: "Aw man :("
             },
             {
-                question: "Will you be my girlfriend?",
-                options: [
-                    {value: "Yes", label: "Yes"},
-                    {value: "No", label: "No"},
-                ],
-                correctAnswer: "Yes"
+                question: "Will you be my girlfriend?"
             }
         ];
 
@@ -376,6 +379,7 @@
             }
         });
 
+        /* 
         function checkAnswer() {
             let selected = document.querySelector('input[name="quiz"]:checked');
             let resultDiv = document.getElementById("result");
@@ -397,6 +401,22 @@
                 resultDiv.style.color = "red";
             }
         }
+        */
+       
+        function checkAnswer(questionIndex, selectedOptionValue) {
+            const question = questions[questionIndex];
+            const feedbackElement = document.getElementById("feedback");
+
+            if (selectedOptionValue === question.correctAnswer) {
+                feedbackElement.textContent = question.correctMessage;
+                feedbackElement.style.color = "green";
+            } else {
+                feedbackElement.textContent = question.incorrectMessage;
+                feedbackElement.style.color = "red";
+            }
+        }
+
+
 
         function loadNextQuestion() {
             currentQuestionIndex++;
