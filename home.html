@@ -173,12 +173,24 @@
         }
     </style>
 </head>
+
 <body>
-    <br><br>
+
+<br><br>
+
 <div class="welcome-banner">
     Welcome to your website, neen!!
 </div>
+
 <br><br><br>
+
+<button class="play-button" onclick="toggleMusic()">▶ Play</button>
+
+<audio id="backgroundMusic" loop>
+    <source src="audio/Arctic Monkeys - No.1 Party Anthem.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
 <div id="menu-icon" onclick="toggleMenu()">
     <div class="bar"></div>
     <div class="bar"></div>
@@ -189,6 +201,13 @@
     <a href="home.html">Home</a>
     <a href="index.html">Quiz</a>
     <a href="timeline.html">Timeline</a>
+</div>
+
+<div id="essay-container" style="display: none; padding: 30px; background-color: white; color: #ff4081; border-radius: 15px; width: 80%; margin: 20px auto;">
+    <h2>My Little Essay (Worth 50%)</h2>
+    <p>
+            EUAUJIBSDOJFNJANIUSDNIJFNLJKANLKNHAOUDUOFONO
+    </p>
 </div>
 
 <div class="slideshow-container">
@@ -219,14 +238,6 @@
     <span class="dot" onclick="currentSlide(4)"></span>  
 </div>
 
-<button class="play-button" onclick="toggleMusic()">▶ Play</button>
-
-<audio id="backgroundMusic" loop>
-    <source src="audio/Arctic Monkeys - No.1 Party Anthem.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
-
-
 <script>
 
     let isPlaying = false;
@@ -242,6 +253,25 @@
             playButton.innerHTML = "⏸ Pause Music";
         }
         isPlaying = !isPlaying;
+    }
+
+    function toggleEssay() {
+        let slideshow = document.querySelector(".slideshow-container");
+        let dots = document.querySelector("div[style='text-align:center']");
+        let essay = document.getElementById("essay-container");
+        let button = document.querySelector(".play-button");
+
+        if (essay.style.display === "none") {
+            essay.style.display = "block";
+            slideshow.style.display = "none";
+            dots.style.display = "none";
+            button.innerText = "Show Slideshow";
+        } else {
+            essay.style.display = "none";
+            slideshow.style.display = "block";
+            dots.style.display = "block";
+            button.innerText = "Show Essay";
+        }
     }
 
     function toggleMenu() {
