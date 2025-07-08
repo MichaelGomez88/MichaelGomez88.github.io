@@ -152,6 +152,12 @@
             .right { left: 0%; }
         }
     </style>
+
+    <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+
 </head>
 <body>
 <div id="menu-icon" onclick="toggleMenu()">
@@ -258,6 +264,25 @@
         sidebar.style.left = sidebar.style.left === "0px" ? "-200px" : "0px";
     }
 
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyD4ncrWW9qUu110DHmywtgAHLcfB0v08mE",
+        authDomain: "neen-website-db.firebaseapp.com",
+        projectId: "neen-website-db",
+        storageBucket: "neen-website-db.appspot.com",
+        messagingSenderId: "665808845797",
+        appId: "1:665808845797:web:affb1f831d7caffb998d0c",
+        measurementId: "G-ZRB6C9HW43"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+
+    /*
+        OLD ADD ENTRY
+    
     function addEntry() {
         const date = document.getElementById("entryDate").value;
         const text = document.getElementById("entryText").value;
@@ -293,8 +318,6 @@
             container.appendChild(content);
             document.querySelector(".timeline").appendChild(container);
 
-            saveEntry({ date, text, imgSrc });
-
             // Clear form inputs
             document.getElementById("entryDate").value = "";
             document.getElementById("entryText").value = "";
@@ -304,10 +327,50 @@
         reader.readAsDataURL(file);
     }
 
+    */
+
+
+
+    /* 
+        OLD SAVE ENTRY
+    
     function saveEntry(entry) {
     const saved = JSON.parse(localStorage.getItem("timelineEntries")) || [];
     saved.push(entry);
     localStorage.setItem("timelineEntries", JSON.stringify(saved));
+}
+*/
+
+function addEntry() {
+    const date = document.getElementById("entryDate").value;
+    const text = document.getElementById("entryText").value;
+    const fileInput = document.getElementById("entryImage");
+    const file = fileInput.files[0];
+
+    if (!date || !text || !file) {
+        alert("Please complete all fields.");
+        return;
+    }
+
+    const timestamp = Date.now();
+    const storageRef = storage.ref(`memories/${timestamp}_${file.name}`);
+
+    storageRef.put(file).then(snapshot => {
+        return snapshot.ref.getDownloadURL();
+    }).then(imgUrl => {
+        return db.collection("timelineEntries").add({
+            date,
+            text,
+            imgUrl,
+            timestamp
+        });
+    }).then(() => {
+        alert("Memory added!");
+        location.reload(); // Refresh to show the new memory
+    }).catch(error => {
+        console.error("Error adding entry:", error);
+        alert("Something went wrong. Please try again.");
+    });
 }
 
 function formatDate(input) {
@@ -315,7 +378,7 @@ function formatDate(input) {
     return `${month}/${day}/${year}`;
 }
 
-function loadEntries() {
+/* function loadEntries() {
     const entries = JSON.parse(localStorage.getItem("timelineEntries")) || [];
 
     entries.forEach((entry, index) => {
@@ -334,6 +397,32 @@ function loadEntries() {
 
         container.appendChild(content);
         document.querySelector(".timeline").appendChild(container);
+    });
+}
+*/
+
+function loadEntries() {
+    db.collection("timelineEntries").orderBy("timestamp").get().then(snapshot => {
+        const timeline = document.querySelector(".timeline");
+        snapshot.docs.forEach((doc, index) => {
+            const data = doc.data();
+            const side = index % 2 === 0 ? 'left' : 'right';
+
+            const container = document.createElement("div");
+            container.className = `container ${side}`;
+
+            const content = document.createElement("div");
+            content.className = "content";
+
+            content.innerHTML = `
+                <h2>${formatDate(data.date)}</h2>
+                <p>${data.text}</p>
+                <img src="${data.imgUrl}" alt="">
+            `;
+
+            container.appendChild(content);
+            timeline.appendChild(container);
+        });
     });
 }
 
