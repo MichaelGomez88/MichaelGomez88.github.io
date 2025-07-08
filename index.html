@@ -293,6 +293,24 @@
             <img src="images/SackboyRizz-removebg-preview.png" alt="">
         </div>
 
+        <hr style="margin: 50px auto; width: 80%; border: 2px dashed white;">
+        <h2 style="color: white;">Add a New Memory</h2>
+        <div id="new-entry-form" style="margin: 30px auto; max-width: 600px; text-align: left; position: relative; z-index: 10;">
+        <label style="color: white;">Date:<br>
+            <input type="date" id="entryDate" style="width: 100%; padding: 8px;">
+        </label><br><br>
+
+        <label style="color: white;">Description:<br>
+            <textarea id="entryText" rows="4" style="width: 100%; padding: 8px;"></textarea>
+        </label><br><br>
+
+        <label style="color: white;">Image:<br>
+            <input type="file" id="entryImage" accept="image/*" style="width: 100%;">
+        </label><br><br>
+
+        <button onclick="addEntry()" class="quiz-button">Add to Timeline</button>
+</div>
+
 
     <script>
     // Toggle sidebar
