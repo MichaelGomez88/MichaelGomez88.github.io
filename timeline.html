@@ -231,8 +231,10 @@
         </div>
     </div>
 
+</div>
 
-    <hr style="margin: 50px auto; width: 80%; border: 2px dashed white;">
+
+<hr style="margin: 50px auto; width: 80%; border: 2px dashed white;">
     <h2 style="color: white;">Add a New Memory</h2>
     <div id="new-entry-form" style="margin: 30px auto; max-width: 600px; text-align: left;">
         <label style="color: white;">Date:<br>
@@ -248,10 +250,7 @@
         </label><br><br>
     
     <button onclick="addEntry()" style="padding: 10px 20px; background-color: white; color: #ff4081; font-family: 'Comfortaa', sans-serif; border: none; border-radius: 8px;">Add to Timeline</button>
-</div>
-
-
-</div>
+    </div>
 
 <script>
     function toggleMenu() {
@@ -286,13 +285,15 @@
             const content = document.createElement("div");
             content.className = "content";
             content.innerHTML = `
-                <h2>${date}</h2>
+                <h2>${formatDate(date)}</h2>
                 <p>${text}</p>
                 <img src="${imgSrc}" alt="">
             `;
 
             container.appendChild(content);
             document.querySelector(".timeline").appendChild(container);
+
+            saveEntry({ date, text, imgSrc });
 
             // Clear form inputs
             document.getElementById("entryDate").value = "";
@@ -302,6 +303,42 @@
 
         reader.readAsDataURL(file);
     }
+
+    function saveEntry(entry) {
+    const saved = JSON.parse(localStorage.getItem("timelineEntries")) || [];
+    saved.push(entry);
+    localStorage.setItem("timelineEntries", JSON.stringify(saved));
+}
+
+function formatDate(input) {
+    const [year, month, day] = input.split("-");
+    return `${month}/${day}/${year}`;
+}
+
+function loadEntries() {
+    const entries = JSON.parse(localStorage.getItem("timelineEntries")) || [];
+
+    entries.forEach((entry, index) => {
+        const side = index % 2 === 0 ? 'left' : 'right';
+        const container = document.createElement("div");
+        container.className = `container ${side}`;
+
+        const content = document.createElement("div");
+        content.className = "content";
+
+        content.innerHTML = `
+            <h2>${formatDate(entry.date)}</h2>
+            <p>${entry.text}</p>
+            <img src="${entry.imgSrc}" alt="">
+        `;
+
+        container.appendChild(content);
+        document.querySelector(".timeline").appendChild(container);
+    });
+}
+
+window.addEventListener("DOMContentLoaded", loadEntries);
+
 </script>
 </body>
 </html>
