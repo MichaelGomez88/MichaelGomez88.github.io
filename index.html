@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Da Quiz</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
+    <!-- Firebase CDN SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+
+   
+   <style>
         body {
             background-color: #faa5d1;
             color: white;
@@ -289,160 +295,95 @@
 
 
     <script>
+    // Toggle sidebar
+    function toggleMenu() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.style.left = sidebar.style.left === "0px" ? "-200px" : "0px";
+    }
 
-        function toggleMenu() {
-            var sidebar = document.getElementById("sidebar");
-            if (sidebar.style.left === "0px") {
-                sidebar.style.left = "=200px";
-            } else {
-                sidebar.style.left = "0px";
-            }
-        }
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyD4ncrWW9qUu110DHmywtgAHLcfB0v08mE",
+        authDomain: "neen-website-db.firebaseapp.com",
+        projectId: "neen-website-db",
+        storageBucket: "neen-website-db.appspot.com",
+        messagingSenderId: "665808845797",
+        appId: "1:665808845797:web:affb1f831d7caffb998d0c",
+        measurementId: "G-ZRB6C9HW43"
+    };
 
-        const correctUsername = "guadalupe"
-        const correctPassword = "neen151617"
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-        const questions = [
-            {
-                question: "What's the main character's name in Threat Level Midnight?",
-                options: [
-                    {value: "Agent Michael Scarn", label: "Agent Michael Scarn"},
-                    {value: "Michael Scott", label: "Michael Scott"},
-                    {value: "Milo", label: "Milo"},
-                    {value: "Golden Face", label: "Golden Face"},
-                ],
-                correctAnswer: "Agent Michael Scarn",
-                correctMessage: "Good, just had to make sure",
-                incorrectMessage: "hmmmmmm, wrong"
-            },
-            {
-                question: "What is my middle name????",
-                options: [
-                    {value: "Ezekiel", label: "Ezekiel"},
-                    {value: "Jamiroquai", label: "Jamiroquai"},
-                    {value: "Ethan", label: "Ethan"},
-                    {value: "Jarvis", label: "Jarvis"},
-                ],
-                correctAnswer: "Ethan",
-                correctMessage: "Such a gross name :(",
-                incorrectMessage: "Alright, Guadalupe..."
-            },
-            {
-                question: "What's 9+10?????",
-                options: [
-                    {value: "19", label: "19"},
-                    {value: "21", label: "21"},
-                    {value: "10", label: "10"},
-                    {value: "20?", label: "20?"},
-                ],
-                correctAnswer: "21",
-                correctMessage: "I believed in you!",
-                incorrectMessage: "FRAUD!!"
-            },
-            {
-                question: "Are you ready for the hardest question??",
-                options: [
-                    {value: "Yes", label: "Yes"},
-                    {value: "Sure", label: "Sure"},
-                    {value: "I guess", label: "I guess"},
-                    {value: "No", label: "No"},
-                ],
-                correctAnswer: "Yes",
-                correctMessage: "Okay, since you're ready",
-                incorrectMessage: "Aw man :("
-            }
-        ];
+    // Format date from YYYY-MM-DD to MM/DD/YYYY
+    function formatDate(input) {
+        const [year, month, day] = input.split("-");
+        return `${month}/${day}/${year}`;
+    }
 
-        let currentQuestionIndex = 0;
+    // Upload memory and image to Firebase
+    function addEntry() {
+        const date = document.getElementById("entryDate").value;
+        const text = document.getElementById("entryText").value;
+        const fileInput = document.getElementById("entryImage");
+        const file = fileInput.files[0];
 
-        function loadQuestion() {
-            const question = questions[currentQuestionIndex];
-            document.querySelector(".quiz-question").innerHTML = question.question;
-
-            question.options.forEach((option, index) => {
-            document.getElementById(`option${index + 1}`).value = option.value;
-            document.querySelector(`label[for="option${index + 1}"]`).innerHTML = option.label;
-            });
-
-        // Reset any previous selections
-        document.querySelectorAll('input[name="quiz"]').forEach(input => input.checked = false);
-
-        // Hide the result and next button for the next question
-        document.getElementById("result").innerHTML = "";
-        document.getElementById("nextButton").classList.add("hidden");
-        document.querySelector('.quiz-button').classList.remove("hidden");
-        }
-
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            let enteredUser = document.getElementById("username").value;
-            let enteredPass = document.getElementById("password").value;
-            let loginMessage = document.getElementById("loginMessage");
-
-            if (enteredUser === correctUsername && enteredPass === correctPassword) {
-                loginMessage.innerHTML = "Let's gooooo!";
-                loginMessage.style.color = "Lightgreen";
-
-                document.querySelector(".login-container").classList.add("hidden");
-                document.getElementById("quizSection").classList.remove("hidden");
-            } else {
-                loginMessage.innerHTML = "You're not Janine...";
-                loginMessage.style.color = "red";
-            }
-        });
-
-        
-        function checkAnswer() {
-            let selected = document.querySelector('input[name="quiz"]:checked');
-            let resultDiv = document.getElementById("result");
-            let nextButton = document.getElementById("nextButton");
-            let submitButton = document.querySelector('.quiz-button');
-
-            if (!selected) {
-                resultDiv.innerHTML = "Please select an answer!";
-                resultDiv.style.color = "yellow";
-                return;
-            }
-            if (selected.value === questions[currentQuestionIndex].correctAnswer) {
-                resultDiv.innerHTML = "Let's goooooo!";
-                resultDiv.style.color = "lightgreen";
-                nextButton.classList.remove("hidden");
-                submitButton.classList.add("hidden");
-            } else {
-                resultDiv.innerHTML = "Dude... no :(";
-                resultDiv.style.color = "red";
-            }
-        }
-        
-
-        function loadNextQuestion() {
-            currentQuestionIndex++;
-
-            if (currentQuestionIndex >= questions.length) {
-                document.querySelector(".quiz-container").innerHTML = '<h2>Will you be my girlfriend?</h2><p></p><img src="images/Question.png" alt="The pic" style="width: 300px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, .2);">';
-                
-                document.getElementById("extraImages").classList.remove("hidden");
-            
+        if (!date || !text || !file) {
+            alert("Please complete all fields.");
             return;
-            }       
-
-            const question = questions[currentQuestionIndex];
-            document.querySelector(".quiz-question").innerHTML = question.question;
-
-            question.options.forEach((option, index) => {
-                document.getElementById(`option${index + 1}`).value = option.value;
-                document.querySelector(`label[for="option${index + 1}"]`).innerHTML = option.label;
-            });
-
-            document.querySelectorAll('input[name="quiz"]').forEach(input => input.checked = false);
-    
-            document.getElementById("result").innerHTML = "";
-            document.getElementById("nextButton").classList.add("hidden");
-            document.querySelector('.quiz-button').classList.remove("hidden");
         }
 
-    </script>
+        const timestamp = Date.now();
+        const storageRef = storage.ref(`memories/${timestamp}_${file.name}`);
+
+        storageRef.put(file).then(snapshot => {
+            return snapshot.ref.getDownloadURL();
+        }).then(imgUrl => {
+            return db.collection("timelineEntries").add({
+                date,
+                text,
+                imgUrl,
+                timestamp
+            });
+        }).then(() => {
+            alert("Memory added!");
+            location.reload(); // Refresh to show the new memory
+        }).catch(error => {
+            console.error("Error adding entry:", error);
+            alert("Something went wrong. Please try again.");
+        });
+    }
+
+    // Load entries from Firestore on page load
+    function loadEntries() {
+        db.collection("timelineEntries").orderBy("timestamp").get().then(snapshot => {
+            const timeline = document.querySelector(".timeline");
+            snapshot.docs.forEach((doc, index) => {
+                const data = doc.data();
+                const side = index % 2 === 0 ? 'left' : 'right';
+
+                const container = document.createElement("div");
+                container.className = `container ${side}`;
+
+                const content = document.createElement("div");
+                content.className = "content";
+                content.innerHTML = `
+                    <h2>${formatDate(data.date)}</h2>
+                    <p>${data.text}</p>
+                    <img src="${data.imgUrl}" alt="">
+                `;
+
+                container.appendChild(content);
+                timeline.appendChild(container);
+            });
+        });
+    }
+
+    // Load timeline on page load
+    window.addEventListener("DOMContentLoaded", loadEntries);
+</script>
+
 
 </body>
 </html>
