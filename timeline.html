@@ -230,12 +230,77 @@
             <img src="images/Valentine Present.jpg" alt="">
         </div>
     </div>
+
+
+    <hr style="margin: 50px auto; width: 80%; border: 2px dashed white;">
+    <h2 style="color: white;">Add a New Memory</h2>
+    <div id="new-entry-form" style="margin: 30px auto; max-width: 600px; text-align: left;">
+        <label style="color: white;">Date:<br>
+            <input type="date" id="entryDate" style="width: 100%; padding: 8px;">
+        </label><br><br>
+    
+        <label style="color: white;">Description:<br>
+            <textarea id="entryText" rows="4" style="width: 100%; padding: 8px;"></textarea>
+        </label><br><br>
+    
+        <label style="color: white;">Image:<br>
+            <input type="file" id="entryImage" accept="image/*" style="width: 100%;">
+        </label><br><br>
+    
+    <button onclick="addEntry()" style="padding: 10px 20px; background-color: white; color: #ff4081; font-family: 'Comfortaa', sans-serif; border: none; border-radius: 8px;">Add to Timeline</button>
+</div>
+
+
 </div>
 
 <script>
     function toggleMenu() {
         var sidebar = document.getElementById("sidebar");
         sidebar.style.left = sidebar.style.left === "0px" ? "-200px" : "0px";
+    }
+
+    function addEntry() {
+        const date = document.getElementById("entryDate").value;
+        const text = document.getElementById("entryText").value;
+        const fileInput = document.getElementById("entryImage");
+        const file = fileInput.files[0];
+
+        if (!date || !text || !file) {
+            alert("Please complete all fields.");
+            return;
+        }
+
+        // Alternate sides: left → right → left → right
+        const containers = document.querySelectorAll('.timeline .container');
+        const lastIsRight = containers.length > 0 && containers[containers.length - 1].classList.contains('right');
+        const side = lastIsRight ? 'left' : 'right';
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imgSrc = e.target.result;
+
+            const container = document.createElement("div");
+            container.className = `container ${side}`;
+
+            const content = document.createElement("div");
+            content.className = "content";
+            content.innerHTML = `
+                <h2>${date}</h2>
+                <p>${text}</p>
+                <img src="${imgSrc}" alt="">
+            `;
+
+            container.appendChild(content);
+            document.querySelector(".timeline").appendChild(container);
+
+            // Clear form inputs
+            document.getElementById("entryDate").value = "";
+            document.getElementById("entryText").value = "";
+            document.getElementById("entryImage").value = "";
+        };
+
+        reader.readAsDataURL(file);
     }
 </script>
 </body>
